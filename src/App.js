@@ -3,6 +3,7 @@ import Header from "./components/Layout/Header";
 import Meals from "./components/Meals/Meals";
 import Cart from "./components/Cart/Cart";
 import { useState } from "react";
+import CartProvider from "./store/CartProvider";
 import { findAllByDisplayValue } from "@testing-library/react";
 function App() {
   const [showCart, setShowCart] = useState(false);
@@ -13,13 +14,13 @@ function App() {
     setShowCart(false);
   };
   return (
-    <React.Fragment>
+    <CartProvider>
       {showCart && <Cart onHideCart={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
         <Meals />
       </main>
-    </React.Fragment>
+    </CartProvider>
   );
 }
 
