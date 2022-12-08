@@ -1,0 +1,30 @@
+.button {
+  color: whitesmoke;
+  border: 0;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: rgb(54, 13, 0);
+  padding: 10px 50px;
+  margin: 10px 50px;
+}
+.icon {
+  padding-top: 2px;
+  margin-right: 11px;
+  /* height: 20px; */
+  width: 20px;
+  /* color: whitesmoke; */
+}
+.items {
+  border: 0;
+  border-radius: 2rem;
+
+  padding: 4px 14px;
+  padding-top: 6px;
+
+  margin: 6px 6px;
+  background-color: rgb(179, 57, 0);
+}
