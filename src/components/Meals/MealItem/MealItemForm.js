@@ -1,9 +1,18 @@
+import React, { useContext } from "react";
 import styles from "./MealItemForm.module.css";
 import Input from "../../UI/Input";
-
+import CartContext from "../../../store/cart-context";
 function MealItemForm(props) {
+  const ctx = useContext(CartContext);
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const amount = e.target.querySelector("#amount").value;
+
+    ctx.addItem({ name: props.id, amount: amount });
+    console.log(ctx.items);
+  };
   return (
-    <form className={styles["meal-form"]}>
+    <form onSubmit={onSubmitHandler} className={styles["form"]}>
       <Input
         label="Amount"
         input={{

@@ -1,8 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import HeaderCardButton from "./HeaderCardButton";
+import CartContext from "../../store/cart-context";
 import mealsImage from "../../assets/meals.jpg";
 import styles from "./Header.module.css";
 function Header(props) {
+  const ctx = useContext(CartContext);
   return (
     <Fragment>
       <header className={styles.header}>
