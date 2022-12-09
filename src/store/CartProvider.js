@@ -8,15 +8,10 @@ const defaultCartState = {
 const cartReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
     const inItem = action.item;
-    // if (state.items.contains(inItem)) {
-    //   console.log(inItem);
-    // }
-    console.log(inItem);
-    const index = state.items.findIndex((item) => item?.name === inItem?.name);
-    console.log(index);
-    if (index !== -1) {
-      console.log(state.items);
 
+    const index = state.items.findIndex((item) => item?.name === inItem?.name);
+
+    if (index !== -1) {
       const outItems = [...state.items];
       outItems[index].amount =
         Number(outItems[index].amount) + Number(inItem.amount);
@@ -28,9 +23,23 @@ const cartReducer = (state, action) => {
     return {
       items: [action.item, ...state.items],
       totalAmount: 0,
-      //   addItem: addItemToCartHandler,
-      //   removeItem: removeItemToCartHandler,
     };
+  }
+  if (action.type === "REM_ITEM") {
+    const inItem = action.item;
+
+    const index = state.items.findIndex((item) => item?.name === inItem?.name);
+
+    if (index !== -1) {
+      const outItems = [...state.items];
+      outItems[index].amount = Number(outItems[index].amount) - 1;
+      return {
+        items: outItems.filter((item) => {
+          return item.amount > 0;
+        }),
+        totalAmount: 0,
+      };
+    }
   }
 
   return defaultCartState;
@@ -38,7 +47,6 @@ const cartReducer = (state, action) => {
 
 function CartProvider(props) {
   const addItemToCartHandler = (item) => {
-    // cartContext.items.push({ item: item.name, amount: item.amount });
     cartContextDispatcher({
       type: "ADD_ITEM",
       item: {
@@ -48,10 +56,13 @@ function CartProvider(props) {
     });
   };
 
-  const removeItemToCartHandler = (id) => {
+  const removeItemFromCartHandler = (item) => {
     cartContextDispatcher({
       type: "REM_ITEM",
-      id: id,
+      item: {
+        name: item.name,
+        amount: item.amount,
+      },
     });
   };
 
@@ -64,7 +75,7 @@ function CartProvider(props) {
     items: cartContextState.items,
     totalAmount: 0,
     addItem: addItemToCartHandler,
-    removeItem: removeItemToCartHandler,
+    removeItem: removeItemFromCartHandler,
   };
 
   return (

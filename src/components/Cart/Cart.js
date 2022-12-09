@@ -1,36 +1,49 @@
-import styles from "./Cart.module.css";
-import CartContext from "../../store/cart-context";
-import Modal from "../UI/Modal";
 import React, { useContext } from "react";
+import styles from "./Cart.module.css";
+import Modal from "../UI/Modal";
+import CartItem from "./CartItem";
+import CartContext from "../../store/cart-context";
+
+const onRemoveHandler = () => {};
+const onAddHandler = () => {};
 function Cart(props) {
-  // const cartItems = (
-  //   <ul className={styles["cart-items"]}>
-  //     {[{ id: "c1", name: "sushi", amount: 2, price: 12.99 }].map((item) => (
-  //       <li key={Math.random()}>{item.name}</li>
-  //     ))}
-  //   </ul>
-  // );
   const ctx = useContext(CartContext);
-  const cartItems = (
+  const totalAmount = `$${ctx.totalAmount.toFixed(2)}`;
+  const cartItems = ctx.items;
+  const hasItems = cartItems.length > 0;
+
+  const cartItemsList = (
     <ul className={styles["cart-items"]}>
-      {ctx.items.map((item) => (
-        <li key={Math.random()}>{item.name}</li>
-      ))}
+      {cartItems
+        .filter((item) => {
+          return item.amount > 0;
+        })
+        .map((item) => (
+          <CartItem
+            key={Math.random()}
+            price={19}
+            name={item.name}
+            amount={item.amount}
+            onRemove={onRemoveHandler}
+            onAdd={onAddHandler}
+          >
+            {item.name}
+          </CartItem>
+        ))}
     </ul>
   );
-  console.log(ctx);
   return (
     <Modal onHideCart={props.onHideCart}>
-      {cartItems}
+      {cartItemsList}
       <div className={styles.total}>
         <span>Total Amount</span>
-        <span>35.62</span>
+        <span>{totalAmount}</span>
       </div>
       <div className={styles.actions}>
         <button onClick={props.onHideCart} className={styles["button--alt"]}>
           Close
         </button>
-        <button className={styles.button}>Order</button>
+        {hasItems && <button className={styles.button}>Order</button>}
       </div>
     </Modal>
   );
