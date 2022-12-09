@@ -1,13 +1,24 @@
 import styles from "./Cart.module.css";
+import CartContext from "../../store/cart-context";
 import Modal from "../UI/Modal";
+import React, { useContext } from "react";
 function Cart(props) {
+  // const cartItems = (
+  //   <ul className={styles["cart-items"]}>
+  //     {[{ id: "c1", name: "sushi", amount: 2, price: 12.99 }].map((item) => (
+  //       <li key={Math.random()}>{item.name}</li>
+  //     ))}
+  //   </ul>
+  // );
+  const ctx = useContext(CartContext);
   const cartItems = (
     <ul className={styles["cart-items"]}>
-      {[{ id: "c1", name: "sushi", amount: 2, price: 12.99 }].map((item) => (
+      {ctx.items.map((item) => (
         <li key={Math.random()}>{item.name}</li>
       ))}
     </ul>
   );
+  console.log(ctx);
   return (
     <Modal onHideCart={props.onHideCart}>
       {cartItems}
