@@ -21,7 +21,7 @@ function Cart(props) {
         .map((item) => (
           <CartItem
             key={Math.random()}
-            price={19}
+            price={item.price}
             name={item.name}
             amount={item.amount}
             onRemove={onRemoveHandler}

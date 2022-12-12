@@ -5,10 +5,10 @@ import CartContext from "../../store/cart-context";
 const CartItem = (props) => {
   const ctx = useContext(CartContext);
   const onRemoveHandler = () => {
-    ctx.removeItem({ name: props.name, amount: 1 });
+    ctx.removeItem({ name: props.name, amount: 1, price: props.price });
   };
   const onAddHandler = () => {
-    ctx.addItem({ name: props.name, amount: 1 });
+    ctx.addItem({ name: props.name, amount: 1, price: props.price });
   };
   const price = `$${props.price.toFixed(2)}`;
   return (

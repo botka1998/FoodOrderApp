@@ -17,7 +17,7 @@ function MealItemForm(props) {
       return;
     }
     setAmountIsValid(true);
-    ctx.addItem({ name: props.id, amount: enteredAmount });
+    ctx.addItem({ name: props.id, amount: enteredAmount, price: props.price });
   };
 
   return (

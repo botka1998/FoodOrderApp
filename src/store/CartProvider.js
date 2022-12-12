@@ -8,25 +8,28 @@ const defaultCartState = {
 const cartReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
     const inItem = action.item;
-
+    const total_amount =
+      Number(state.totalAmount) + Number(inItem.amount) * Number(inItem.price);
     const index = state.items.findIndex((item) => item?.name === inItem?.name);
-
+    console.log(inItem);
     if (index !== -1) {
       const outItems = [...state.items];
       outItems[index].amount =
         Number(outItems[index].amount) + Number(inItem.amount);
       return {
         items: outItems,
-        totalAmount: 0,
+        totalAmount: total_amount,
       };
     }
     return {
-      items: [action.item, ...state.items],
-      totalAmount: 0,
+      items: [inItem, ...state.items],
+      totalAmount: total_amount,
     };
   }
   if (action.type === "REM_ITEM") {
     const inItem = action.item;
+    const total_amount =
+      Number(state.totalAmount) - Number(inItem.amount) * Number(inItem.price);
 
     const index = state.items.findIndex((item) => item?.name === inItem?.name);
 
@@ -37,7 +40,7 @@ const cartReducer = (state, action) => {
         items: outItems.filter((item) => {
           return item.amount > 0;
         }),
-        totalAmount: 0,
+        totalAmount: total_amount,
       };
     }
   }
@@ -51,7 +54,8 @@ function CartProvider(props) {
       type: "ADD_ITEM",
       item: {
         name: item.name,
-        amount: item.amount,
+        amount: Number(item.amount),
+        price: Number(item.price),
       },
     });
   };
@@ -61,7 +65,8 @@ function CartProvider(props) {
       type: "REM_ITEM",
       item: {
         name: item.name,
-        amount: item.amount,
+        amount: Number(item.amount),
+        price: Number(item.price),
       },
     });
   };
@@ -73,7 +78,7 @@ function CartProvider(props) {
 
   const cartContext = {
     items: cartContextState.items,
-    totalAmount: 0,
+    totalAmount: cartContextState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
   };
